@@ -38,7 +38,7 @@ public class App {
                     System.out.println("Opción no válida. Por favor, intente de nuevo.");
             }
 
-        } while (opcion != 4);
+        } while (opcion != 0);
 
         scanner.close();
     }
