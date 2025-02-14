@@ -7,9 +7,7 @@ public class App {
         int opcion;
 
         do {
-            // Mostrar el menú
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
+            clearScreen();
             System.out.println("Seleccione una opción:");
             System.out.println("1 - Validar signo de un número");
             System.out.println("2 - Validar Tipo año");
@@ -17,20 +15,22 @@ public class App {
             System.out.println("0 - Salir");
             System.out.print("Opción: ");
 
-      
             opcion = leerOpcion(scanner);
 
-            // Controlar las opciones con el switch
             switch (opcion) {
                 case 1:
                     validarSigno(scanner);
                     break;
                 case 2:
-                    validarAnio(scanner);
+                    
+                    System.out.println("Opción tipo año");
+                    pressEnterToContinue(scanner);
                     break;
+
                 case 3:
-                    sumaConEvaluacionNegativa(scanner);
+                    System.out.println("Opción con evaluación negativa");
                     break;
+
                 case 0:
                     System.out.println("Saliendo del programa...");
                     break;
@@ -39,16 +39,15 @@ public class App {
             }
 
         } while (opcion != 0);
-
         scanner.close();
     }
 
-    // Método para validar el signo de un número
     public static void validarSigno(Scanner scanner) {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        clearScreen();
         System.out.print("Ingrese un número: ");
         int numero = scanner.nextInt();
+
+        scanner.nextLine();  
 
         if (numero > 0) {
             System.out.println("El número es positivo.");
@@ -57,72 +56,40 @@ public class App {
         } else {
             System.out.println("El número es cero.");
         }
-        pressEnterToContinue();
-
+        pressEnterToContinue(scanner);
     }
 
-    // Método para validar si el año es bisiesto o no
-    public static void validarAnio(Scanner scanner) {
+
+
+    public static void pressEnterToContinue(Scanner scanner)
+    {
+        System.out.println("Presione Enter para continuar...");
+        scanner.nextLine();  
+    }
+
+    public static void clearScreen()
+    {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        System.out.print("Ingrese un año: ");
-        int año = scanner.nextInt();
-
-        if ((año % 4 == 0 && año % 100 != 0) || (año % 400 == 0)) {
-            System.out.println(año + " es un año bisiesto.");
-        } else {
-            System.out.println(año + " no es un año bisiesto.");
-        }
-        pressEnterToContinue();
-
-    }
-
-    // Método para realizar una suma con evaluación negativa
-    public static void sumaConEvaluacionNegativa(Scanner scanner) {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        System.out.print("Ingrese el primer número: ");
-        int num1 = scanner.nextInt();
-
-        System.out.print("Ingrese el segundo número: ");
-        int num2 = scanner.nextInt();
-
-        int suma = num1 + num2;
-
-        // Evaluación negativa de la suma
-        if (suma < 0) {
-            System.out.println("La suma es negativa: " + suma);
-        } else {
-            System.out.println("La suma es positiva o cero: " + suma);
-        }
-        pressEnterToContinue();
-
-
-    }
-
-    public static void pressEnterToContinue() {
-        System.out.println("Press Enter key to continue...");
-        try {
-            System.in.read();
-        } catch (Exception e) {
-        }
     }
 
     private static int leerOpcion(Scanner scanner) {
         int opcion = -1;
-        while (true) {
+      
             try {
                 opcion = Integer.parseInt(scanner.nextLine()); // Intentar leer como entero
-                if (opcion >= 0 && opcion <= 3) {
-                    
-                } else {
+                if (!(opcion >= 0 && opcion <= 3)) {
                     System.out.println("Por favor, ingrese una opción válida entre 0 y 3.");
-                }
+                    pressEnterToContinue(scanner);
+                } 
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Por favor ingrese un número.");
+                    System.out.println("Entrada inválida. Por favor ingrese un número.");
+                    pressEnterToContinue(scanner);
             }
-            return opcion; // Validar que la opción esté en el rango esperado
-        }
+            
+            return opcion;
+            
+        
     }
 
 }
